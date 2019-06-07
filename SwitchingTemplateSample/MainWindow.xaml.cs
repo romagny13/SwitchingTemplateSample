@@ -1,0 +1,42 @@
+﻿using SwitchingTemplateSample.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace SwitchingTemplateSample
+{
+    /// <summary>
+    /// Logique d'interaction pour MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            var vm = new MainWindowViewModel();
+            this.DataContext = vm;
+        }
+
+        private void OnEditClick(object sender, RoutedEventArgs e)
+        {
+            Form1.Edit();
+        }
+
+        private void OnDetailsClick(object sender, RoutedEventArgs e)
+        {
+            Form1.ShowDetails();
+        }
+    }
+}

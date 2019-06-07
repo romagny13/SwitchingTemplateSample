@@ -1,0 +1,90 @@
+﻿<Window x:Class="SwitchingTemplateSample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SwitchingTemplateSample"
+        xmlns:cl="clr-namespace:ControlLib;assembly=ControlLib"
+        x:Name="ThisWindow"
+        mc:Ignorable="d"
+        FontSize="16"
+        Title="MainWindow" Height="450" Width="800">
+
+    <Window.Resources>
+
+        <Style x:Key="Heading" TargetType="{x:Type TextBlock}">
+            <Setter Property="TextBlock.Foreground" Value="#2980b9" />
+            <Setter Property="TextBlock.FontSize" Value="14"/>
+            <Setter Property="FrameworkElement.VerticalAlignment" Value="Center"/>
+        </Style>
+        
+        <Style TargetType="Button">
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Padding" Value="5" />
+        </Style>
+
+        <DataTemplate x:Key="DetailsTemplate">
+            <StackPanel Margin="10">
+                <Border Height="120" Margin="0,5" BorderBrush="#eee" BorderThickness="2" HorizontalAlignment="Left">
+                    <Image Source="{Binding ImagePath}" />
+                </Border>
+                <TextBlock Text="FIRSTNAME" Style="{StaticResource Heading}"/>
+                <TextBlock Text="{Binding FirstName}" Margin="0 2 0 8"/>
+                <TextBlock Text="LASTNAME" Style="{StaticResource Heading}"/>
+                <TextBlock Text="{Binding LastName}" Foreground="Black" Margin="0 2 0 8"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="EditTemplate">
+            <StackPanel Margin="10">
+                <TextBlock Text="FIRSTNAME" Style="{StaticResource Heading}"/>
+                <TextBox Text="{Binding FirstName}" Margin="0 2 0 8"/>
+                <TextBlock Text="LASTNAME" Style="{StaticResource Heading}"/>
+                <TextBox Text="{Binding LastName}" Margin="0 2 0 8"/>
+                <TextBlock Text="IMAGE" Style="{StaticResource Heading}"/>
+                <Button Margin="0 2 0 8" 
+                        Command="{Binding DataContext.SelectImageCommand,ElementName=ThisWindow}"
+                        HorizontalAlignment="Left">
+                    <Grid Height="120" Margin="0,5" HorizontalAlignment="Left">
+                        <Image Source="{Binding ImagePath}" />
+                    </Grid>
+                </Button>
+               
+            </StackPanel>
+        </DataTemplate>
+
+    </Window.Resources>
+    <Grid>
+        <cl:MvvmForm x:Name="Form1" 
+                     Source="{Binding Person}"
+                     AddNewTemplate="{StaticResource EditTemplate}"
+                     DetailsTemplate="{StaticResource DetailsTemplate}" 
+                     EditTemplate="{StaticResource EditTemplate}" Margin="10">
+            <cl:MvvmForm.AddButtonContent>
+                <StackPanel Orientation="Horizontal">
+                    <cl:XamlIcon Data="M6,0L10,0 10,6 16,6 16,10 10,10 10,16 6,16 6,10 0,10 0,6 6,6z" Brush="#2980b9"/>
+                    <TextBlock Text="ADD" Margin="5,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </cl:MvvmForm.AddButtonContent>
+            <cl:MvvmForm.EditButtonContent>
+                <StackPanel Orientation="Horizontal">
+                    <cl:XamlIcon Data="F1M233.5498,613.749C233.9048,613.662,233.9828,613.379,233.7238,613.123L232.1378,611.544C231.8808,611.288,231.5968,611.367,231.5098,611.718L230.9968,613.784C230.9088,614.139,231.1258,614.355,231.4808,614.267z M249.4978,595.808C247.7348,594.047 245.9968,595.404 245.9968,595.404 245.7078,595.627 245.2668,596.019 245.0118,596.269 244.7588,596.521 244.7638,596.939 245.0198,597.196L248.1078,600.281C248.3648,600.54 248.7828,600.544 249.0388,600.29 249.2918,600.036 249.6808,599.594 249.9038,599.307 249.9038,599.307 251.2638,597.572 249.4978,595.808 M237.2018,612.109C236.9458,612.369,236.5228,612.369,236.2668,612.109L233.1778,609.025C232.9208,608.768,232.9208,608.349,233.1778,608.09L243.0538,598.228C243.3108,597.971,243.7318,597.971,243.9898,598.228L247.0738,601.312C247.3328,601.571,247.3328,601.993,247.0738,602.248z" Brush="#2980b9"/>
+                    <TextBlock Text="EDIT" Margin="5,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </cl:MvvmForm.EditButtonContent>
+            <cl:MvvmForm.SaveButtonContent>
+                <StackPanel Orientation="Horizontal">
+                    <cl:XamlIcon Data="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" Brush="#2980b9"/>
+                    <TextBlock Text="SAVE" Margin="5,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </cl:MvvmForm.SaveButtonContent>
+            <cl:MvvmForm.CancelButtonContent>
+                <StackPanel Orientation="Horizontal">
+                    <cl:XamlIcon Height="18" Width="18" Data="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z" Brush="#2980b9"/>
+                    <TextBlock Text="CANCEL" Margin="5,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </cl:MvvmForm.CancelButtonContent>
+        </cl:MvvmForm>
+    </Grid>
+</Window>
